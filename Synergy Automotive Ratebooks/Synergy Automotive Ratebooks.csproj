@@ -12,6 +12,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <HockeyAppResourceId>5084fb684d9245b680679258f3dc76c8</HockeyAppResourceId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -48,16 +49,62 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ALD.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ALD.Designer.cs">
+      <DependentUpon>ALD.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Arval.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Arval.Designer.cs">
+      <DependentUpon>Arval.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form2.Designer.cs">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Hitachi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Hitachi.Designer.cs">
+      <DependentUpon>Hitachi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Leaseplan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Leaseplan.Designer.cs">
+      <DependentUpon>Leaseplan.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SynergyUtilities.cs" />
+    <EmbeddedResource Include="ALD.resx">
+      <DependentUpon>ALD.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Arval.resx">
+      <DependentUpon>Arval.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form2.resx">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hitachi.resx">
+      <DependentUpon>Hitachi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Leaseplan.resx">
+      <DependentUpon>Leaseplan.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

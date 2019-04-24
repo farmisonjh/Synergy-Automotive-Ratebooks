@@ -11,6 +11,7 @@ using MySql.Data.MySqlClient;
 using MySql.Data;
 using Microsoft.VisualBasic.FileIO;
 
+
 namespace Synergy_Automotive_Ratebooks
 {
     public partial class Form1 : Form
@@ -20,11 +21,21 @@ namespace Synergy_Automotive_Ratebooks
             InitializeComponent();
         }
 
+        public string GetDriveLocation()
+        {
+            string drive = @"C:\Users\JohnHughes\Downloads\";
+            return drive;
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
+            SynergyUtilities syn = new SynergyUtilities();
+            syn.UploadToDatabase("TRUNCATE test;");
             int rates = 0;
+            Form1 f1 = new Form1();
+            string drive = f1.GetDriveLocation();
             string[] filebox = new string[] { @"C:\Users\JohnHughes\Downloads\ALD\ALD 8k nm.csv", @"C:\Users\JohnHughes\Downloads\ALD\ALD 8k wm.csv", @"C:\Users\JohnHughes\Downloads\ALD\ALD 5k nm.csv", @"C:\Users\JohnHughes\Downloads\ALD\ALD 5k wm.csv", @"C:\Users\JohnHughes\Downloads\ALD\ALD 24 nm.csv", @"C:\Users\JohnHughes\Downloads\ALD\ALD 24 wm.csv", @"C:\Users\JohnHughes\Downloads\ALD\ALD 36 nm.csv", @"C:\Users\JohnHughes\Downloads\ALD\ALD 36 wm.csv", @"C:\Users\JohnHughes\Downloads\ALD\ALD 48 nm.csv", @"C:\Users\JohnHughes\Downloads\ALD\ALD 48 wm.csv", @"C:\Users\JohnHughes\Downloads\ALD\ALD LCV wm.csv" };
-            foreach(string fil in filebox)
+            foreach (string fil in filebox)
             {
                 var dt = GetALDTable(fil);
                 if (dt.Rows.Count > 0)
@@ -35,14 +46,17 @@ namespace Synergy_Automotive_Ratebooks
                     rates += dt.Rows.Count;
                 }
             }
-            
-            //UploadToDatabase("INSERT INTO leases (`lease_cap_id`, `lease_term`, `lease_mileage_annual`, `lease_monthly_cost`, `lease_maintenance`, `lease_ppm`, `lease_ppmm`, `lease_funder_id`, `lease_vat`, `lease_datetime`) SELECT t.`test_cap_id`, t.`test_term`, t.`test_mileage_annual`, t.`test_monthly_cost`, case when t.`test_maintenance` > 0 then t.`test_maintenance`-t.`test_monthly_cost` else 0 end as test_maintenance, case when t.`test_maintenance` > 0 then 0 else 0.01 * t.`test_ppm` end as test_ppm, case when t.`test_maintenance` > 0 then 0.01 * t.`test_ppm` else 0 end as test_ppmm, t.`test_funder`, 0, now() FROM test t WHERE t.`test_cap_id` > 0 and t.test_funder = 4;");
-            System.Windows.Forms.MessageBox.Show("The Ratebooks were uploaded successfully with " + rates + " lines.");
+
+            this.Close();
+            ALD f2 = new ALD();
+            f2.ShowDialog();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string[] filebox = new string[] { @"C:\Users\JohnHughes\Downloads\Arval\3-36-10K.csv" };
+            SynergyUtilities syn = new SynergyUtilities();
+            syn.UploadToDatabase("TRUNCATE test;");
+            string[] filebox = new string[] { @"C:\Users\JohnHughes\Downloads\Arval\3-24-5K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-24-8K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-24-10K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-24-12K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-24-15K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-24-18K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-24-20K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-24-25K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-24-30K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-36-5K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-36-8K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-36-10K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-36-12K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-36-15K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-36-18K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-36-20K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-36-25K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-36-30K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-48-5K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-48-8K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-48-10K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-48-12K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-48-15K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-48-18K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-48-20K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-48-25K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-48-30K.csv"};
             foreach (string fil in filebox)
             {
                 var dt = GetArvalTable(fil);
@@ -54,22 +68,35 @@ namespace Synergy_Automotive_Ratebooks
                     System.Windows.Forms.MessageBox.Show("The Ratebook " + fil + " was uploaded successfully with " + dt.Rows.Count + " lines.");
                 }
             }
+
+            this.Close();
+            Arval f2 = new Arval();
+            f2.ShowDialog();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+            SynergyUtilities syn = new SynergyUtilities();
+            syn.UploadToDatabase("TRUNCATE test_lex;");
             string[] filebox = new string[] { @"C:\Users\JohnHughes\Downloads\Lex\CH 24.csv", @"C:\Users\JohnHughes\Downloads\Lex\CH 36.csv", @"C:\Users\JohnHughes\Downloads\Lex\CH 48.csv", @"C:\Users\JohnHughes\Downloads\Lex\CH 60.csv", @"C:\Users\JohnHughes\Downloads\Lex\CHNM 24.csv", @"C:\Users\JohnHughes\Downloads\Lex\CHNM 36.csv", @"C:\Users\JohnHughes\Downloads\Lex\CHNM 48.csv", @"C:\Users\JohnHughes\Downloads\Lex\CHNM 60.csv" };
+            int rates = 0;
             foreach (string fil in filebox)
             {
+                
                 var dt = GetLexTable(fil);
                 if (dt.Rows.Count > 0)
                 {
                     var MyCsv = ToCsv(dt);
                     System.IO.File.WriteAllText(@"C:\Users\JohnHughes\Downloads\lex_temp.csv", MyCsv);
                     MyMySQLConnector(@"C:\Users\JohnHughes\Downloads\lex_temp.csv","test_lex");
-                    System.Windows.Forms.MessageBox.Show("The Ratebook " + fil + " was uploaded successfully with " + dt.Rows.Count + " lines.");
+                    rates += dt.Rows.Count;
                 }
+                label1.Text = rates + " vehicles added.";
             }
+            System.Windows.Forms.MessageBox.Show("The Ratebooks were uploaded successfully with " + rates + " lines.");
+            this.Close();
+            Form2 f2 = new Form2();
+            f2.ShowDialog();
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -87,6 +114,67 @@ namespace Synergy_Automotive_Ratebooks
                     System.Windows.Forms.MessageBox.Show("The Ratebook " + fil + " was uploaded successfully with " + dt.Rows.Count + " lines.");
                 }
             }
+            this.Close();
+            Leaseplan l1 = new Leaseplan();
+            l1.ShowDialog();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            string[] single_nm = new string[] { @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-30k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-30k-nmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-8k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-8k-nmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-30k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-30k-nmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-8k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-8k-nmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-36-12k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-36-12k-nmV.csv" };
+            string[] double_nm = new string[] { @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-24-1015k-nm.csv",  @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-24-1015k-nmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-24-2025k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-24-2025k-nmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-36-1015k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-36-1015k-nmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-36-2025k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-36-2025k-nmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-1015k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-1015k-nmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-2025k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-2025k-nmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-1015k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-1015k-nmv.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-2025k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-2025k-nmv.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-2436-8k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-2436-30k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-2436-30k-nmV.csv" };
+            string[] single_wm = new string[] { @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-30k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-30k-wmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-8k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-8k-wmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-30k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-30k-wmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-8k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-8k-wmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-36-12k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-36-12k-wmV.csv" };
+            string[] double_wm = new string[] { @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-24-1015k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-24-1015k-wmv.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-24-2025k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-24-2025k-wmv.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-36-1015k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-36-1015k-wmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-36-2025k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-36-2025k-wmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-1015k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-1015k-wmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-2025k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-2025k-wmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-1015k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-1015k-wmv.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-2025k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-2025k-wmv.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-2436-8k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-2436-30k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-2436-30k-wmV.csv" };
+            foreach (string fil in single_nm)
+            {
+                var dt = GetHitachiTable(fil);
+                if (dt.Rows.Count > 0)
+                {
+                    var MyCsv = ToCsv(dt);
+                    System.IO.File.WriteAllText(@"C:\Users\JohnHughes\Downloads\hitachi_temp.csv", MyCsv);
+                    MyMySQLConnector(@"C:\Users\JohnHughes\Downloads\hitachi_temp.csv", "test");
+                    System.Windows.Forms.MessageBox.Show("The Ratebook " + fil + " was uploaded successfully with " + dt.Rows.Count + " lines.");
+                }
+            }
+
+            foreach (string fil in double_nm)
+            {
+                var dt = GetHitachiTable_2(fil);
+                if (dt.Rows.Count > 0)
+                {
+                    var MyCsv = ToCsv(dt);
+                    System.IO.File.WriteAllText(@"C:\Users\JohnHughes\Downloads\hitachi_temp.csv", MyCsv);
+                    MyMySQLConnector(@"C:\Users\JohnHughes\Downloads\hitachi_temp.csv", "test");
+                    System.Windows.Forms.MessageBox.Show("The Ratebook " + fil + " was uploaded successfully with " + dt.Rows.Count + " lines.");
+                }
+            }
+
+            foreach (string fil in single_wm)
+            {
+                var dt = GetHitachiMaintainedTable(fil);
+                if (dt.Rows.Count > 0)
+                {
+                    var MyCsv = ToCsv(dt);
+                    System.IO.File.WriteAllText(@"C:\Users\JohnHughes\Downloads\hitachi_temp.csv", MyCsv);
+                    MyMySQLConnector(@"C:\Users\JohnHughes\Downloads\hitachi_temp.csv", "test");
+                    System.Windows.Forms.MessageBox.Show("The Ratebook " + fil + " was uploaded successfully with " + dt.Rows.Count + " lines.");
+                }
+            }
+
+            foreach (string fil in double_wm)
+            {
+                var dt = GetHitachiMaintainedTable_2(fil);
+                if (dt.Rows.Count > 0)
+                {
+                    var MyCsv = ToCsv(dt);
+                    System.IO.File.WriteAllText(@"C:\Users\JohnHughes\Downloads\hitachi_temp.csv", MyCsv);
+                    MyMySQLConnector(@"C:\Users\JohnHughes\Downloads\hitachi_temp.csv", "test");
+                    System.Windows.Forms.MessageBox.Show("The Ratebook " + fil + " was uploaded successfully with " + dt.Rows.Count + " lines.");
+                }
+            }
+            this.Hide();
+            Hitachi f2 = new Hitachi();
+            f2.ShowDialog();
         }
 
         private static DataTable GetALDTable(string csv_file_path)
@@ -193,6 +281,240 @@ namespace Synergy_Automotive_Ratebooks
                             }
                         }
                         csvData.Rows.Add(fieldData[10], fieldData[23], fieldData[19], fieldData[5], fieldData[6], 0, 1);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+            return csvData;
+        }
+
+        private static DataTable GetHitachiTable(string csv_file_path)
+        {
+            DataTable csvData = new DataTable();
+            try
+            {
+                using (TextFieldParser csvReader = new TextFieldParser(csv_file_path))
+                {
+                    csvReader.SetDelimiters(new string[] { "," });
+                    csvReader.HasFieldsEnclosedInQuotes = true;
+                    string[] colFields = csvReader.ReadFields();
+                    //    foreach (string column in colFields)
+                    //    {
+                    //        DataColumn datecolumn = new DataColumn(column);
+                    //        datecolumn.AllowDBNull = true;
+                    //        csvData.Columns.Add(datecolumn);
+                    //    }
+                    DataColumn cap = new DataColumn(colFields[0]);
+                    cap.DataType = System.Type.GetType("System.Int32");
+                    csvData.Columns.Add(cap);
+                    DataColumn term = new DataColumn(colFields[21]);
+                    term.DataType = System.Type.GetType("System.Int32");
+                    csvData.Columns.Add(term);
+                    DataColumn miles = new DataColumn(colFields[22]);
+                    miles.DataType = System.Type.GetType("System.Int32");
+                    csvData.Columns.Add(miles);
+                    DataColumn finance = new DataColumn(colFields[23]);
+                    finance.DataType = System.Type.GetType("System.Decimal");
+                    csvData.Columns.Add(finance);
+                    DataColumn maintenance = new DataColumn();
+                    maintenance.DataType = System.Type.GetType("System.Decimal");
+                    csvData.Columns.Add(maintenance);
+                    DataColumn ppm = new DataColumn(colFields[28]);
+                    ppm.DataType = System.Type.GetType("System.Decimal");
+                    csvData.Columns.Add(ppm);
+                    csvData.Columns.Add("Funder");
+                    while (!csvReader.EndOfData)
+                    {
+                        string[] fieldData = csvReader.ReadFields();
+                        //Making empty value as null
+                        for (int i = 0; i < fieldData.Length; i++)
+                        {
+                            //Console.WriteLine(csvData.Columns[0].ColumnName);
+                            if (fieldData[i] == "")
+                            {
+                                fieldData[i] = null;
+                            }
+                        }
+                        csvData.Rows.Add(fieldData[0], fieldData[21], fieldData[22], fieldData[23], 0, 0, 5);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+            return csvData;
+        }
+
+        private static DataTable GetHitachiTable_2(string csv_file_path)
+        {
+            DataTable csvData = new DataTable();
+            try
+            {
+                using (TextFieldParser csvReader = new TextFieldParser(csv_file_path))
+                {
+                    csvReader.SetDelimiters(new string[] { "," });
+                    csvReader.HasFieldsEnclosedInQuotes = true;
+                    string[] colFields = csvReader.ReadFields();
+                    //    foreach (string column in colFields)
+                    //    {
+                    //        DataColumn datecolumn = new DataColumn(column);
+                    //        datecolumn.AllowDBNull = true;
+                    //        csvData.Columns.Add(datecolumn);
+                    //    }
+                    DataColumn cap = new DataColumn(colFields[0]);
+                    cap.DataType = System.Type.GetType("System.Int32");
+                    csvData.Columns.Add(cap);
+                    DataColumn term = new DataColumn(colFields[21]);
+                    term.DataType = System.Type.GetType("System.Int32");
+                    csvData.Columns.Add(term);
+                    DataColumn miles = new DataColumn(colFields[22]);
+                    miles.DataType = System.Type.GetType("System.Int32");
+                    csvData.Columns.Add(miles);
+                    DataColumn finance = new DataColumn(colFields[23]);
+                    finance.DataType = System.Type.GetType("System.Decimal");
+                    csvData.Columns.Add(finance);
+                    DataColumn maintenance = new DataColumn();
+                    maintenance.DataType = System.Type.GetType("System.Decimal");
+                    csvData.Columns.Add(maintenance);
+                    DataColumn ppm = new DataColumn(colFields[26]);
+                    ppm.DataType = System.Type.GetType("System.Decimal");
+                    csvData.Columns.Add(ppm);
+                    csvData.Columns.Add("Funder");
+                    while (!csvReader.EndOfData)
+                    {
+                        string[] fieldData = csvReader.ReadFields();
+                        //Making empty value as null
+                        for (int i = 0; i < fieldData.Length; i++)
+                        {
+                            //Console.WriteLine(csvData.Columns[0].ColumnName);
+                            if (fieldData[i] == "")
+                            {
+                                fieldData[i] = null;
+                            }
+                        }
+                        csvData.Rows.Add(fieldData[0], fieldData[21], fieldData[22], fieldData[23], 0, fieldData[26], 5);
+                        csvData.Rows.Add(fieldData[0], fieldData[27], fieldData[28], fieldData[29], 0, fieldData[32], 5);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+            return csvData;
+        }
+
+        private static DataTable GetHitachiMaintainedTable(string csv_file_path)
+        {
+            DataTable csvData = new DataTable();
+            try
+            {
+                using (TextFieldParser csvReader = new TextFieldParser(csv_file_path))
+                {
+                    csvReader.SetDelimiters(new string[] { "," });
+                    csvReader.HasFieldsEnclosedInQuotes = true;
+                    string[] colFields = csvReader.ReadFields();
+                    //    foreach (string column in colFields)
+                    //    {
+                    //        DataColumn datecolumn = new DataColumn(column);
+                    //        datecolumn.AllowDBNull = true;
+                    //        csvData.Columns.Add(datecolumn);
+                    //    }
+                    DataColumn cap = new DataColumn(colFields[0]);
+                    cap.DataType = System.Type.GetType("System.Int32");
+                    csvData.Columns.Add(cap);
+                    DataColumn term = new DataColumn(colFields[21]);
+                    term.DataType = System.Type.GetType("System.Int32");
+                    csvData.Columns.Add(term);
+                    DataColumn miles = new DataColumn(colFields[22]);
+                    miles.DataType = System.Type.GetType("System.Int32");
+                    csvData.Columns.Add(miles);
+                    DataColumn finance = new DataColumn(colFields[23]);
+                    finance.DataType = System.Type.GetType("System.Decimal");
+                    csvData.Columns.Add(finance);
+                    DataColumn maintenance = new DataColumn(colFields[24]);
+                    maintenance.DataType = System.Type.GetType("System.Decimal");
+                    csvData.Columns.Add(maintenance);
+                    DataColumn ppm = new DataColumn(colFields[28]);
+                    ppm.DataType = System.Type.GetType("System.Decimal");
+                    csvData.Columns.Add(ppm);
+                    csvData.Columns.Add("Funder");
+                    while (!csvReader.EndOfData)
+                    {
+                        string[] fieldData = csvReader.ReadFields();
+                        //Making empty value as null
+                        for (int i = 0; i < fieldData.Length; i++)
+                        {
+                            //Console.WriteLine(csvData.Columns[0].ColumnName);
+                            if (fieldData[i] == "")
+                            {
+                                fieldData[i] = null;
+                            }
+                        }
+                        csvData.Rows.Add(fieldData[0], fieldData[21], fieldData[22], fieldData[23], fieldData[24], fieldData[28], 5);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+            return csvData;
+        }
+
+        private static DataTable GetHitachiMaintainedTable_2(string csv_file_path)
+        {
+            DataTable csvData = new DataTable();
+            try
+            {
+                using (TextFieldParser csvReader = new TextFieldParser(csv_file_path))
+                {
+                    csvReader.SetDelimiters(new string[] { "," });
+                    csvReader.HasFieldsEnclosedInQuotes = true;
+                    string[] colFields = csvReader.ReadFields();
+                    //    foreach (string column in colFields)
+                    //    {
+                    //        DataColumn datecolumn = new DataColumn(column);
+                    //        datecolumn.AllowDBNull = true;
+                    //        csvData.Columns.Add(datecolumn);
+                    //    }
+                    DataColumn cap = new DataColumn(colFields[0]);
+                    cap.DataType = System.Type.GetType("System.Int32");
+                    csvData.Columns.Add(cap);
+                    DataColumn term = new DataColumn(colFields[21]);
+                    term.DataType = System.Type.GetType("System.Int32");
+                    csvData.Columns.Add(term);
+                    DataColumn miles = new DataColumn(colFields[22]);
+                    miles.DataType = System.Type.GetType("System.Int32");
+                    csvData.Columns.Add(miles);
+                    DataColumn finance = new DataColumn(colFields[23]);
+                    finance.DataType = System.Type.GetType("System.Decimal");
+                    csvData.Columns.Add(finance);
+                    DataColumn maintenance = new DataColumn(colFields[24]);
+                    maintenance.DataType = System.Type.GetType("System.Decimal");
+                    csvData.Columns.Add(maintenance);
+                    DataColumn ppm = new DataColumn(colFields[28]);
+                    ppm.DataType = System.Type.GetType("System.Decimal");
+                    csvData.Columns.Add(ppm);
+                    csvData.Columns.Add("Funder");
+                    while (!csvReader.EndOfData)
+                    {
+                        string[] fieldData = csvReader.ReadFields();
+                        //Making empty value as null
+                        for (int i = 0; i < fieldData.Length; i++)
+                        {
+                            //Console.WriteLine(csvData.Columns[0].ColumnName);
+                            if (fieldData[i] == "")
+                            {
+                                fieldData[i] = null;
+                            }
+                        }
+                        csvData.Rows.Add(fieldData[0], fieldData[21], fieldData[22], fieldData[23], fieldData[24], fieldData[28], 5);
+                        csvData.Rows.Add(fieldData[0], fieldData[29], fieldData[30], fieldData[31], fieldData[32], fieldData[36], 5);
                     }
                 }
             }
@@ -366,32 +688,125 @@ namespace Synergy_Automotive_Ratebooks
             return sb.ToString();
         }
 
-        private static void UploadToDatabase(string query)
+        private void button6_Click(object sender, EventArgs e)
         {
-            try
+            string[] filebox = new string[] { @"C:\Users\JohnHughes\Downloads\WebsiteUpload.csv" };
+            foreach (string fil in filebox)
             {
-                //This is my connection string i have assigned the database file address path  
-                string MyConnection2 = "datasource = 160.153.129.221; port = 3306; UID = farmison_john; password = Boro2902; database = synergy_auto;";
-                //This is my insert query in which i am taking input from the user through windows forms  
-                string Query = query;
-                //This is  MySqlConnection here i have created the object and pass my connection string.  
-                MySqlConnection MyConn2 = new MySqlConnection(MyConnection2);
-                //This is command class which will handle the query and connection object.  
-                MySqlCommand MyCommand2 = new MySqlCommand(Query, MyConn2);
-                MySqlDataReader MyReader2;
-                MyConn2.Open();
-                MyReader2 = MyCommand2.ExecuteReader();     // Here our query will be executed and data saved into the database.  
-                MessageBox.Show("Save Data");
-                while (MyReader2.Read())
+                var dt = GetWebsite(fil);
+                if (dt.Rows.Count > 0)
                 {
+                    var MyCsv = ToCsv(dt);
+                    System.IO.File.WriteAllText(@"C:\Users\JohnHughes\Downloads\website_temp.csv", MyCsv);
+                    MyMySQLConnector(@"C:\Users\JohnHughes\Downloads\website_temp.csv", "lives");
+                    System.Windows.Forms.MessageBox.Show("The Ratebook " + fil + " was uploaded successfully with " + dt.Rows.Count + " lines.");
                 }
-                MyConn2.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
             }
         }
 
+        private static DataTable GetWebsite(string csv_file_path)
+        {
+            DataTable csvData = new DataTable();
+            try
+            {
+                using (TextFieldParser csvReader = new TextFieldParser(csv_file_path))
+                {
+                    csvReader.SetDelimiters(new string[] { "," });
+                    csvReader.HasFieldsEnclosedInQuotes = true;
+                    string[] colFields = csvReader.ReadFields();
+                    //    foreach (string column in colFields)
+                    //    {
+                    //        DataColumn datecolumn = new DataColumn(column);
+                    //        datecolumn.AllowDBNull = true;
+                    //        csvData.Columns.Add(datecolumn);
+                    //    }
+                    DataColumn cap = new DataColumn(colFields[0]);
+                    cap.DataType = System.Type.GetType("System.Int32");
+                    csvData.Columns.Add(cap);
+                    DataColumn term = new DataColumn();
+                    term.DataType = System.Type.GetType("System.Int32");
+                    csvData.Columns.Add(term);
+                    DataColumn miles = new DataColumn();
+                    miles.DataType = System.Type.GetType("System.Int32");
+                    csvData.Columns.Add(miles);
+                    DataColumn ir = new DataColumn();
+                    ir.DataType = System.Type.GetType("System.Int32");
+                    csvData.Columns.Add(ir);
+                    DataColumn finance = new DataColumn();
+                    finance.DataType = System.Type.GetType("System.Decimal");
+                    csvData.Columns.Add(finance);
+                    DataColumn maintenance = new DataColumn();
+                    maintenance.DataType = System.Type.GetType("System.Decimal");
+                    csvData.Columns.Add(maintenance);
+                    DataColumn ppm = new DataColumn();
+                    ppm.DataType = System.Type.GetType("System.Decimal");
+                    csvData.Columns.Add(ppm);
+                    DataColumn ppmm = new DataColumn();
+                    ppmm.DataType = System.Type.GetType("System.Decimal");
+                    csvData.Columns.Add(ppmm);
+                    DataColumn bulk = new DataColumn();
+                    bulk.DataType = System.Type.GetType("System.Int32");
+                    csvData.Columns.Add(bulk);
+                    DataColumn funder24 = new DataColumn();
+                    funder24.DataType = System.Type.GetType("System.String");
+                    csvData.Columns.Add(funder24);
+                    DataColumn funder36 = new DataColumn();
+                    funder36.DataType = System.Type.GetType("System.String");
+                    csvData.Columns.Add(funder36);
+                    DataColumn funder48 = new DataColumn();
+                    funder48.DataType = System.Type.GetType("System.String");
+                    csvData.Columns.Add(funder48);
+                    DataColumn searchtype = new DataColumn();
+                    searchtype.DataType = System.Type.GetType("System.String");
+                    csvData.Columns.Add(searchtype);
+                    DataColumn bodytype = new DataColumn();
+                    bodytype.DataType = System.Type.GetType("System.String");
+                    csvData.Columns.Add(bodytype);
+                    DataColumn bopts = new DataColumn();
+                    bopts.DataType = System.Type.GetType("System.Int32");
+                    csvData.Columns.Add(bopts);
+                    DataColumn popts = new DataColumn();
+                    popts.DataType = System.Type.GetType("System.Int32");
+                    csvData.Columns.Add(popts);
+                    DataColumn options = new DataColumn();
+                    options.DataType = System.Type.GetType("System.String");
+                    csvData.Columns.Add(options);
+
+                    while (!csvReader.EndOfData)
+                    {
+                        string[] fieldData = csvReader.ReadFields();
+                        //Making empty value as null
+                        for (int i = 0; i < fieldData.Length; i++)
+                        {
+                            //Console.WriteLine(csvData.Columns[0].ColumnName);
+                            if (fieldData[i] == "")
+                            {
+                                fieldData[i] = null;
+                            }
+                        }
+                        csvData.Rows.Add(fieldData[0], 24, 5000, 3, fieldData[11], fieldData[204], 0, 0,fieldData[398],fieldData[122],fieldData[123],fieldData[124],fieldData[111],fieldData[1],fieldData[114],fieldData[115],fieldData[116]);
+                        csvData.Rows.Add(fieldData[0], 24, 8000, 3, fieldData[12], fieldData[205], 0, 0, fieldData[398], fieldData[122], fieldData[123], fieldData[124], fieldData[111], fieldData[1], fieldData[114], fieldData[115], fieldData[116]);
+                        csvData.Rows.Add(fieldData[0], 24, 10000, 3, fieldData[13], fieldData[206], 0, 0, fieldData[398], fieldData[122], fieldData[123], fieldData[124], fieldData[111], fieldData[1], fieldData[114], fieldData[115], fieldData[116]);
+                        csvData.Rows.Add(fieldData[0], 24, 15000, 3, fieldData[14], fieldData[207], 0, 0, fieldData[398], fieldData[122], fieldData[123], fieldData[124], fieldData[111], fieldData[1], fieldData[114], fieldData[115], fieldData[116]);
+                        csvData.Rows.Add(fieldData[0], 24, 20000, 3, fieldData[15], fieldData[208], 0, 0, fieldData[398], fieldData[122], fieldData[123], fieldData[124], fieldData[111], fieldData[1], fieldData[114], fieldData[115], fieldData[116]);
+                        csvData.Rows.Add(fieldData[0], 36, 5000, 3, fieldData[16], fieldData[213], 0, 0, fieldData[398], fieldData[122], fieldData[123], fieldData[124], fieldData[111], fieldData[1], fieldData[114], fieldData[115], fieldData[116]);
+                        csvData.Rows.Add(fieldData[0], 36, 8000, 3, fieldData[17], fieldData[214], 0, 0, fieldData[398], fieldData[122], fieldData[123], fieldData[124], fieldData[111], fieldData[1], fieldData[114], fieldData[115], fieldData[116]);
+                        csvData.Rows.Add(fieldData[0], 36, 10000, 3, fieldData[18], fieldData[215], 0, 0, fieldData[398], fieldData[122], fieldData[123], fieldData[124], fieldData[111], fieldData[1], fieldData[114], fieldData[115], fieldData[116]);
+                        csvData.Rows.Add(fieldData[0], 36, 15000, 3, fieldData[19], fieldData[217], 0, 0, fieldData[398], fieldData[122], fieldData[123], fieldData[124], fieldData[111], fieldData[1], fieldData[114], fieldData[115], fieldData[116]);
+                        csvData.Rows.Add(fieldData[0], 36, 20000, 3, fieldData[20], fieldData[219], 0, 0, fieldData[398], fieldData[122], fieldData[123], fieldData[124], fieldData[111], fieldData[1], fieldData[114], fieldData[115], fieldData[116]);
+                        csvData.Rows.Add(fieldData[0], 48, 5000, 3, fieldData[21], fieldData[222], 0, 0, fieldData[398], fieldData[122], fieldData[123], fieldData[124], fieldData[111], fieldData[1], fieldData[114], fieldData[115], fieldData[116]);
+                        csvData.Rows.Add(fieldData[0], 48, 8000, 3, fieldData[22], fieldData[223], 0, 0, fieldData[398], fieldData[122], fieldData[123], fieldData[124], fieldData[111], fieldData[1], fieldData[114], fieldData[115], fieldData[116]);
+                        csvData.Rows.Add(fieldData[0], 48, 10000, 3, fieldData[23], fieldData[224], 0, 0, fieldData[398], fieldData[122], fieldData[123], fieldData[124], fieldData[111], fieldData[1], fieldData[114], fieldData[115], fieldData[116]);
+                        csvData.Rows.Add(fieldData[0], 48, 15000, 3, fieldData[24], fieldData[226], 0, 0, fieldData[398], fieldData[122], fieldData[123], fieldData[124], fieldData[111], fieldData[1], fieldData[114], fieldData[115], fieldData[116]);
+                        csvData.Rows.Add(fieldData[0], 48, 20000, 3, fieldData[25], fieldData[228], 0, 0, fieldData[398], fieldData[122], fieldData[123], fieldData[124], fieldData[111], fieldData[1], fieldData[114], fieldData[115], fieldData[116]);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+            return csvData;
+        }
     }
 }
