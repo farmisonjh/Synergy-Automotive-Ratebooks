@@ -62,6 +62,14 @@ namespace Synergy_Automotive_Ratebooks
         {
             this.Hide();
             Form1 f1 = new Form1();
+            f1.ShowDialog();
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            this.Hide();
+            Form1 f1 = new Form1();
+            f1.ShowDialog();
         }
     }
 }

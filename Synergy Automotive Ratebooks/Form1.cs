@@ -23,7 +23,7 @@ namespace Synergy_Automotive_Ratebooks
 
         public string GetDriveLocation()
         {
-            string drive = @"C:\Users\JohnHughes\Downloads\";
+            string drive = @"R:\Daily Work Folders\Website Uploads\";
             return drive;
         }
 
@@ -34,51 +34,55 @@ namespace Synergy_Automotive_Ratebooks
             int rates = 0;
             Form1 f1 = new Form1();
             string drive = f1.GetDriveLocation();
-            string[] filebox = new string[] { @"C:\Users\JohnHughes\Downloads\ALD\ALD 8k nm.csv", @"C:\Users\JohnHughes\Downloads\ALD\ALD 8k wm.csv", @"C:\Users\JohnHughes\Downloads\ALD\ALD 5k nm.csv", @"C:\Users\JohnHughes\Downloads\ALD\ALD 5k wm.csv", @"C:\Users\JohnHughes\Downloads\ALD\ALD 24 nm.csv", @"C:\Users\JohnHughes\Downloads\ALD\ALD 24 wm.csv", @"C:\Users\JohnHughes\Downloads\ALD\ALD 36 nm.csv", @"C:\Users\JohnHughes\Downloads\ALD\ALD 36 wm.csv", @"C:\Users\JohnHughes\Downloads\ALD\ALD 48 nm.csv", @"C:\Users\JohnHughes\Downloads\ALD\ALD 48 wm.csv", @"C:\Users\JohnHughes\Downloads\ALD\ALD LCV wm.csv" };
+            string[] filebox = new string[] { @"R:\Daily Work Folders\Ratebooks\ALD\Current\ALD 8k nm.csv", @"R:\Daily Work Folders\Ratebooks\ALD\Current\ALD 8k wm.csv", @"R:\Daily Work Folders\Ratebooks\ALD\Current\ALD 5k nm.csv", @"R:\Daily Work Folders\Ratebooks\ALD\Current\ALD 5k wm.csv", @"R:\Daily Work Folders\Ratebooks\ALD\Current\ALD 24 nm.csv", @"R:\Daily Work Folders\Ratebooks\ALD\Current\ALD 24 wm.csv", @"R:\Daily Work Folders\Ratebooks\ALD\Current\ALD 36 nm.csv", @"R:\Daily Work Folders\Ratebooks\ALD\Current\ALD 36 wm.csv", @"R:\Daily Work Folders\Ratebooks\ALD\Current\ALD 48 nm.csv", @"R:\Daily Work Folders\Ratebooks\ALD\Current\ALD 48 wm.csv", @"R:\Daily Work Folders\Ratebooks\ALD\Current\ALD LCV wm.csv" };
             foreach (string fil in filebox)
             {
                 var dt = GetALDTable(fil);
                 if (dt.Rows.Count > 0)
                 {
                     var MyCsv = ToCsv(dt);
-                    System.IO.File.WriteAllText(@"C:\Users\JohnHughes\Downloads\ald_temp.csv", MyCsv);
-                    MyMySQLConnector(@"C:\Users\JohnHughes\Downloads\ald_temp.csv","test");
+                    System.IO.File.WriteAllText(@"R:\Daily Work Folders\Website Uploads\ald_temp.csv", MyCsv);
+                    MyMySQLConnector(@"R:\Daily Work Folders\Website Uploads\ald_temp.csv","test");
                     rates += dt.Rows.Count;
                 }
             }
+            System.Windows.Forms.MessageBox.Show("The Ratebooks were uploaded successfully with " + rates + " lines.");
 
-            this.Close();
+            this.Hide();
             ALD f2 = new ALD();
             f2.ShowDialog();
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             SynergyUtilities syn = new SynergyUtilities();
             syn.UploadToDatabase("TRUNCATE test;");
-            string[] filebox = new string[] { @"C:\Users\JohnHughes\Downloads\Arval\3-24-5K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-24-8K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-24-10K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-24-12K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-24-15K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-24-18K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-24-20K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-24-25K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-24-30K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-36-5K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-36-8K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-36-10K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-36-12K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-36-15K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-36-18K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-36-20K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-36-25K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-36-30K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-48-5K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-48-8K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-48-10K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-48-12K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-48-15K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-48-18K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-48-20K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-48-25K.csv", @"C:\Users\JohnHughes\Downloads\Arval\3-48-30K.csv"};
+            int rates = 0;
+            string[] filebox = new string[] { @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-24-5K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-24-8K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-24-10K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-24-12K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-24-15K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-24-18K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-24-20K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-24-25K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-24-30K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-36-5K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-36-8K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-36-10K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-36-12K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-36-15K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-36-18K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-36-20K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-36-25K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-36-30K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-48-5K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-48-8K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-48-10K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-48-12K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-48-15K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-48-18K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-48-20K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-48-25K.csv", @"R:\Daily Work Folders\Ratebooks\Arval\Current\3-48-30K.csv"};
             foreach (string fil in filebox)
             {
                 var dt = GetArvalTable(fil);
                 if (dt.Rows.Count > 0)
                 {
                     var MyCsv = ToCsv(dt);
-                    System.IO.File.WriteAllText(@"C:\Users\JohnHughes\Downloads\arval_temp.csv", MyCsv);
-                    MyMySQLConnector(@"C:\Users\JohnHughes\Downloads\arval_temp.csv","test");
-                    System.Windows.Forms.MessageBox.Show("The Ratebook " + fil + " was uploaded successfully with " + dt.Rows.Count + " lines.");
+                    System.IO.File.WriteAllText(@"R:\Daily Work Folders\Website Uploads\arval_temp.csv", MyCsv);
+                    MyMySQLConnector(@"R:\Daily Work Folders\Website Uploads\arval_temp.csv","test");
+                    rates += dt.Rows.Count;
                 }
             }
+            System.Windows.Forms.MessageBox.Show("The Ratebooks were uploaded successfully with " + rates + " lines.");
 
-            this.Close();
             Arval f2 = new Arval();
             f2.ShowDialog();
+            this.Hide();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             SynergyUtilities syn = new SynergyUtilities();
             syn.UploadToDatabase("TRUNCATE test_lex;");
-            string[] filebox = new string[] { @"C:\Users\JohnHughes\Downloads\Lex\CH 24.csv", @"C:\Users\JohnHughes\Downloads\Lex\CH 36.csv", @"C:\Users\JohnHughes\Downloads\Lex\CH 48.csv", @"C:\Users\JohnHughes\Downloads\Lex\CH 60.csv", @"C:\Users\JohnHughes\Downloads\Lex\CHNM 24.csv", @"C:\Users\JohnHughes\Downloads\Lex\CHNM 36.csv", @"C:\Users\JohnHughes\Downloads\Lex\CHNM 48.csv", @"C:\Users\JohnHughes\Downloads\Lex\CHNM 60.csv" };
+            string[] filebox = new string[] { @"R:\Daily Work Folders\Ratebooks\Lex\Current\CH 24.csv", @"R:\Daily Work Folders\Ratebooks\Lex\Current\CH 36.csv", @"R:\Daily Work Folders\Ratebooks\Lex\Current\CH 48.csv", @"R:\Daily Work Folders\Ratebooks\Lex\Current\CH 60.csv", @"R:\Daily Work Folders\Ratebooks\Lex\Current\CHNM 24.csv", @"R:\Daily Work Folders\Ratebooks\Lex\Current\CHNM 36.csv", @"R:\Daily Work Folders\Ratebooks\Lex\Current\CHNM 48.csv", @"R:\Daily Work Folders\Ratebooks\Lex\Current\CHNM 60.csv" };
             int rates = 0;
             foreach (string fil in filebox)
             {
@@ -87,55 +91,66 @@ namespace Synergy_Automotive_Ratebooks
                 if (dt.Rows.Count > 0)
                 {
                     var MyCsv = ToCsv(dt);
-                    System.IO.File.WriteAllText(@"C:\Users\JohnHughes\Downloads\lex_temp.csv", MyCsv);
-                    MyMySQLConnector(@"C:\Users\JohnHughes\Downloads\lex_temp.csv","test_lex");
+                    System.IO.File.WriteAllText(@"R:\Daily Work Folders\Website Uploads\lex_temp.csv", MyCsv);
+                    MyMySQLConnector(@"R:\Daily Work Folders\Website Uploads\lex_temp.csv","test_lex");
                     rates += dt.Rows.Count;
                 }
                 label1.Text = rates + " vehicles added.";
             }
             System.Windows.Forms.MessageBox.Show("The Ratebooks were uploaded successfully with " + rates + " lines.");
-            this.Close();
+
+            this.Hide();
             Form2 f2 = new Form2();
             f2.ShowDialog();
+            
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            //, @"C:\Users\JohnHughes\Downloads\Leaseplan\Contract Hire_8k.csv" 
-            string[] filebox = new string[] {@"C:\Users\JohnHughes\Downloads\Leaseplan\Contract Hire.csv", @"C:\Users\JohnHughes\Downloads\Leaseplan\Contract Hire_8k.csv"};
+            SynergyUtilities syn = new SynergyUtilities();
+            syn.UploadToDatabase("TRUNCATE test;");
+            //, @"R:\Daily Work Folders\Ratebooks\Leaseplan\Current\Contract Hire_8k.csv" 
+            string[] filebox = new string[] {@"R:\Daily Work Folders\Ratebooks\Leaseplan\Current\Contract Hire.csv", @"R:\Daily Work Folders\Ratebooks\Leaseplan\Current\Contract Hire_8k.csv"};
+            int rates = 0;
             foreach (string fil in filebox)
             {
                 var dt = GetLeaseplanTable(fil);
                 if (dt.Rows.Count > 0)
                 {
                     var MyCsv = ToCsv(dt);
-                    System.IO.File.WriteAllText(@"C:\Users\JohnHughes\Downloads\leaseplan_temp.csv", MyCsv);
-                    MyMySQLConnector(@"C:\Users\JohnHughes\Downloads\leaseplan_temp.csv", "test");
-                    System.Windows.Forms.MessageBox.Show("The Ratebook " + fil + " was uploaded successfully with " + dt.Rows.Count + " lines.");
+                    System.IO.File.WriteAllText(@"R:\Daily Work Folders\Website Uploads\leaseplan_temp.csv", MyCsv);
+                    MyMySQLConnector(@"R:\Daily Work Folders\Website Uploads\leaseplan_temp.csv", "test");
+                    rates += dt.Rows.Count;
                 }
             }
-            this.Close();
+            System.Windows.Forms.MessageBox.Show("The Ratebooks were uploaded successfully with " + rates + " lines.");
+            this.Hide();
             Leaseplan l1 = new Leaseplan();
             l1.ShowDialog();
+            
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            string[] single_nm = new string[] { @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-30k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-30k-nmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-8k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-8k-nmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-30k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-30k-nmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-8k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-8k-nmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-36-12k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-36-12k-nmV.csv" };
-            string[] double_nm = new string[] { @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-24-1015k-nm.csv",  @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-24-1015k-nmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-24-2025k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-24-2025k-nmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-36-1015k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-36-1015k-nmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-36-2025k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-36-2025k-nmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-1015k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-1015k-nmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-2025k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-2025k-nmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-1015k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-1015k-nmv.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-2025k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-2025k-nmv.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-2436-8k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-2436-30k-nm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-2436-30k-nmV.csv" };
-            string[] single_wm = new string[] { @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-30k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-30k-wmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-8k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-8k-wmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-30k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-30k-wmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-8k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-8k-wmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-36-12k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-36-12k-wmV.csv" };
-            string[] double_wm = new string[] { @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-24-1015k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-24-1015k-wmv.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-24-2025k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-24-2025k-wmv.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-36-1015k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-36-1015k-wmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-36-2025k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-36-2025k-wmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-1015k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-1015k-wmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-2025k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-48-2025k-wmV.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-1015k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-1015k-wmv.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-2025k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-60-2025k-wmv.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-2436-8k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-2436-30k-wm.csv", @"C:\Users\JohnHughes\Downloads\Hitachi\Hit-2436-30k-wmV.csv" };
+            SynergyUtilities syn = new SynergyUtilities();
+            syn.UploadToDatabase("TRUNCATE test;");
+            string[] single_nm = new string[] { @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-60-30k-nm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-60-30k-nmV.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-60-8k-nm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-60-8k-nmV.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-48-30k-nm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-48-30k-nmV.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-48-8k-nm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-48-8k-nmV.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-36-12k-nm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-36-12k-nmV.csv" };
+            string[] double_nm = new string[] { @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-24-1015k-nm.csv",  @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-24-1015k-nmV.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-24-2025k-nm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-24-2025k-nmV.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-36-1015k-nm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-36-1015k-nmV.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-36-2025k-nm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-36-2025k-nmV.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-48-1015k-nm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-48-1015k-nmV.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-48-2025k-nm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-48-2025k-nmV.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-60-1015k-nm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-60-1015k-nmV.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-60-2025k-nm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-60-2025k-nmV.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-2436-8k-nm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-2436-30k-nm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-2436-30k-nmV.csv" };
+            string[] single_wm = new string[] { @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-60-30k-wm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-60-30k-wmV.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-60-8k-wm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-60-8k-wmV.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-48-30k-wm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-48-30k-wmV.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-48-8k-wm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-48-8k-wmV.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-36-12k-wm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-36-12k-wmV.csv" };
+            string[] double_wm = new string[] { @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-24-1015k-wm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-24-1015k-wmV.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-24-2025k-wm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-24-2025k-wmV.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-36-1015k-wm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-36-1015k-wmV.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-36-2025k-wm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-36-2025k-wmV.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-48-1015k-wm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-48-1015k-wmV.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-48-2025k-wm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-48-2025k-wmV.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-60-1015k-wm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-60-1015k-wmV.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-60-2025k-wm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-60-2025k-wmV.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-2436-8k-wm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-2436-30k-wm.csv", @"R:\Daily Work Folders\Ratebooks\Hitachi\Current\Hit-2436-30k-wmV.csv" };
+            int rates = 0;
             foreach (string fil in single_nm)
             {
                 var dt = GetHitachiTable(fil);
                 if (dt.Rows.Count > 0)
                 {
                     var MyCsv = ToCsv(dt);
-                    System.IO.File.WriteAllText(@"C:\Users\JohnHughes\Downloads\hitachi_temp.csv", MyCsv);
-                    MyMySQLConnector(@"C:\Users\JohnHughes\Downloads\hitachi_temp.csv", "test");
-                    System.Windows.Forms.MessageBox.Show("The Ratebook " + fil + " was uploaded successfully with " + dt.Rows.Count + " lines.");
+                    System.IO.File.WriteAllText(@"R:\Daily Work Folders\Website Uploads\hitachi_temp.csv", MyCsv);
+                    MyMySQLConnector(@"R:\Daily Work Folders\Website Uploads\hitachi_temp.csv", "test");
+                    rates += dt.Rows.Count;
                 }
             }
+            
 
             foreach (string fil in double_nm)
             {
@@ -143,9 +158,9 @@ namespace Synergy_Automotive_Ratebooks
                 if (dt.Rows.Count > 0)
                 {
                     var MyCsv = ToCsv(dt);
-                    System.IO.File.WriteAllText(@"C:\Users\JohnHughes\Downloads\hitachi_temp.csv", MyCsv);
-                    MyMySQLConnector(@"C:\Users\JohnHughes\Downloads\hitachi_temp.csv", "test");
-                    System.Windows.Forms.MessageBox.Show("The Ratebook " + fil + " was uploaded successfully with " + dt.Rows.Count + " lines.");
+                    System.IO.File.WriteAllText(@"R:\Daily Work Folders\Website Uploads\hitachi_temp.csv", MyCsv);
+                    MyMySQLConnector(@"R:\Daily Work Folders\Website Uploads\hitachi_temp.csv", "test");
+                    rates += dt.Rows.Count;
                 }
             }
 
@@ -155,9 +170,9 @@ namespace Synergy_Automotive_Ratebooks
                 if (dt.Rows.Count > 0)
                 {
                     var MyCsv = ToCsv(dt);
-                    System.IO.File.WriteAllText(@"C:\Users\JohnHughes\Downloads\hitachi_temp.csv", MyCsv);
-                    MyMySQLConnector(@"C:\Users\JohnHughes\Downloads\hitachi_temp.csv", "test");
-                    System.Windows.Forms.MessageBox.Show("The Ratebook " + fil + " was uploaded successfully with " + dt.Rows.Count + " lines.");
+                    System.IO.File.WriteAllText(@"R:\Daily Work Folders\Website Uploads\hitachi_temp.csv", MyCsv);
+                    MyMySQLConnector(@"R:\Daily Work Folders\Website Uploads\hitachi_temp.csv", "test");
+                    rates += dt.Rows.Count;
                 }
             }
 
@@ -167,14 +182,16 @@ namespace Synergy_Automotive_Ratebooks
                 if (dt.Rows.Count > 0)
                 {
                     var MyCsv = ToCsv(dt);
-                    System.IO.File.WriteAllText(@"C:\Users\JohnHughes\Downloads\hitachi_temp.csv", MyCsv);
-                    MyMySQLConnector(@"C:\Users\JohnHughes\Downloads\hitachi_temp.csv", "test");
-                    System.Windows.Forms.MessageBox.Show("The Ratebook " + fil + " was uploaded successfully with " + dt.Rows.Count + " lines.");
+                    System.IO.File.WriteAllText(@"R:\Daily Work Folders\Website Uploads\hitachi_temp.csv", MyCsv);
+                    MyMySQLConnector(@"R:\Daily Work Folders\Website Uploads\hitachi_temp.csv", "test");
+                    rates += dt.Rows.Count;
                 }
             }
+            System.Windows.Forms.MessageBox.Show("The Ratebooks were uploaded successfully with " + rates + " lines.");
             this.Hide();
             Hitachi f2 = new Hitachi();
             f2.ShowDialog();
+            
         }
 
         private static DataTable GetALDTable(string csv_file_path)
@@ -636,6 +653,45 @@ namespace Synergy_Automotive_Ratebooks
 
         static void MyMySQLConnector(string filepath, string table)
         {
+            
+            string connStr = "datasource=160.153.129.221;port=3306;UID=farmison_john;password=Boro2902;database=synergy_auto;";
+            // MySql Connection Object
+            MySqlConnection conn = new MySqlConnection(connStr);
+
+            //  csv file path
+            string file = filepath;
+
+            // MySQL BulkLoader
+            MySqlBulkLoader bl = new MySqlBulkLoader(conn);
+            bl.TableName = table;
+            bl.FieldTerminator = ",";
+            bl.LineTerminator = "\n";
+            bl.NumberOfLinesToSkip = 1;
+            bl.FileName = file;
+
+            try
+            {
+                Console.WriteLine("Connecting to MySQL...");
+                conn.Open();
+
+                // Upload data from file
+                int count = bl.Load();
+                Console.WriteLine(count + " lines uploaded.");
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            Console.WriteLine("Done.");
+            Console.ReadLine();
+
+        }
+
+        static void MyMySQLConnector2(string filepath, string table)
+        {
+            
             string connStr = "datasource=160.153.129.221;port=3306;UID=farmison_john;password=Boro2902;database=synergy_auto;";
             // MySql Connection Object
             MySqlConnection conn = new MySqlConnection(connStr);
@@ -690,15 +746,17 @@ namespace Synergy_Automotive_Ratebooks
 
         private void button6_Click(object sender, EventArgs e)
         {
-            string[] filebox = new string[] { @"C:\Users\JohnHughes\Downloads\WebsiteUpload.csv" };
+            SynergyUtilities syn = new SynergyUtilities();
+            syn.UploadToDatabase("TRUNCATE lives;");
+            string[] filebox = new string[] { @"R:\Daily Work Folders\Website Uploads\WebsiteUpload.csv" };
             foreach (string fil in filebox)
             {
                 var dt = GetWebsite(fil);
                 if (dt.Rows.Count > 0)
                 {
                     var MyCsv = ToCsv(dt);
-                    System.IO.File.WriteAllText(@"C:\Users\JohnHughes\Downloads\website_temp.csv", MyCsv);
-                    MyMySQLConnector(@"C:\Users\JohnHughes\Downloads\website_temp.csv", "lives");
+                    System.IO.File.WriteAllText(@"R:\Daily Work Folders\Website Uploads\website_temp.csv", MyCsv);
+                    MyMySQLConnector(@"R:\Daily Work Folders\Website Uploads\website_temp.csv", "lives");
                     System.Windows.Forms.MessageBox.Show("The Ratebook " + fil + " was uploaded successfully with " + dt.Rows.Count + " lines.");
                 }
             }

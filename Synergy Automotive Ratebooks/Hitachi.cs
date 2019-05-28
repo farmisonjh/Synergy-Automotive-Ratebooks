@@ -38,9 +38,8 @@ namespace Synergy_Automotive_Ratebooks
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            string[] query_labels = new string[] { "Convert Hitachi Leases", "Update Hitachi Leases", "Find Best Hitachi Leases", "Remove Old Leases" };
+            string[] query_labels = new string[] { "Convert Hitachi Leases", "Update Hitachi Leases", "Find Best Hitachi Leases", "Remove Old Leases", "Finishing Off" };
             updateLbl.Text = query_labels[Counter];
-            Console.WriteLine(e.ProgressPercentage);
             progressBar1.Value = e.ProgressPercentage;
             Counter++;
         }
@@ -56,6 +55,13 @@ namespace Synergy_Automotive_Ratebooks
         {
             updateLbl.Text = "Removing Leases";
             backgroundWorker1.RunWorkerAsync();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Form1 f1 = new Form1();
+            f1.ShowDialog();
         }
     }
 }

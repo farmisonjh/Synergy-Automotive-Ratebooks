@@ -39,24 +39,27 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(83, 39);
+            this.label1.Location = new System.Drawing.Point(42, 20);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(609, 25);
+            this.label1.Size = new System.Drawing.Size(304, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Would you like to add the ALD ratebooks to the live database?";
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(88, 102);
+            this.progressBar1.Location = new System.Drawing.Point(44, 53);
+            this.progressBar1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(614, 50);
+            this.progressBar1.Size = new System.Drawing.Size(307, 26);
             this.progressBar1.TabIndex = 1;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(190, 221);
+            this.button1.Location = new System.Drawing.Point(95, 115);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(151, 64);
+            this.button1.Size = new System.Drawing.Size(76, 33);
             this.button1.TabIndex = 3;
             this.button1.Text = "Yes";
             this.button1.UseVisualStyleBackColor = true;
@@ -64,19 +67,22 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(431, 221);
+            this.button2.Location = new System.Drawing.Point(216, 115);
+            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(151, 64);
+            this.button2.Size = new System.Drawing.Size(76, 33);
             this.button2.TabIndex = 4;
             this.button2.Text = "No";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
             // updateLbl
             // 
             this.updateLbl.AutoSize = true;
-            this.updateLbl.Location = new System.Drawing.Point(86, 200);
+            this.updateLbl.Location = new System.Drawing.Point(43, 101);
+            this.updateLbl.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.updateLbl.Name = "updateLbl";
-            this.updateLbl.Size = new System.Drawing.Size(0, 25);
+            this.updateLbl.Size = new System.Drawing.Size(0, 13);
             this.updateLbl.TabIndex = 5;
             // 
             // backgroundWorker1
@@ -88,14 +94,15 @@
             // 
             // ALD
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 330);
+            this.ClientSize = new System.Drawing.Size(400, 172);
             this.Controls.Add(this.updateLbl);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "ALD";
             this.Text = "ALD";
             this.ResumeLayout(false);

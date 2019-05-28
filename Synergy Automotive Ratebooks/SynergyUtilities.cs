@@ -33,7 +33,7 @@ namespace Synergy_Automotive_Ratebooks
                 //This is command class which will handle the query and connection object.  
                 MySqlCommand MyCommand2 = new MySqlCommand(Query, MyConn2);
                 MySqlDataReader MyReader2;
-                MyCommand2.CommandTimeout = 120;
+                MyCommand2.CommandTimeout = 240;
                 MyConn2.Open();
                 MyReader2 = MyCommand2.ExecuteReader();     // Here our query will be executed and data saved into the database.  
 
